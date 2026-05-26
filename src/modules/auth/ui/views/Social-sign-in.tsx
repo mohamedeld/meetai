@@ -11,6 +11,7 @@ export const SocialSignIn = memo(() => {
     await authClient.signIn.social(
       {
         provider: provider,
+        callbackURL: "/",
       },
       {
         onSuccess() {

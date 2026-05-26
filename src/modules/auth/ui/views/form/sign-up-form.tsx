@@ -1,4 +1,6 @@
 "use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,9 +16,8 @@ import { SignUpSchema, TSignUp } from "@/modules/auth/schema/auth.schema";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import { SocialSignIn } from "../Social-sign-in";
 
 export const SignUpForm = () => {
   const router = useRouter();
@@ -144,7 +145,7 @@ export const SignUpForm = () => {
             Or continue with
           </span>
         </div>
-
+        <SocialSignIn />
         <div className="text-center text-sm">
           Already have an account?{" "}
           <Link
