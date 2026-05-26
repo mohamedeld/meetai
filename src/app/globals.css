@@ -122,9 +122,13 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-[--font-roboto-mono];
   }
   html {
     @apply font-sans;
   }
+}
+
+body {
+  font-family: var(--font-roboto-mono);
 }
