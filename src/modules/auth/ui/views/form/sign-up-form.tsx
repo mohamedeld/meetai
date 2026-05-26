@@ -10,25 +10,24 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
-import { SignInSchema, TSignIn } from "@/modules/auth/schema/auth.schema";
+import { SignUpSchema, TSignUp } from "@/modules/auth/schema/auth.schema";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
-import { SocialSignIn } from "../Social-sign-in";
 
-export const SignInForm = () => {
+export const SignUpForm = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-
   const form = useForm({
-    resolver: zodResolver(SignInSchema),
+    resolver: zodResolver(SignUpSchema),
   });
-  const signInSubmit = async (data: TSignIn) => {
-    await authClient.signIn.email(
+  const signInSubmit = async (data: TSignUp) => {
+    await authClient.signUp.email(
       {
+        name: data?.email,
         email: data?.email,
         password: data?.password,
       },
@@ -47,12 +46,32 @@ export const SignInForm = () => {
     <form className="p-6 md:p-8" onSubmit={form.handleSubmit(signInSubmit)}>
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center text-center">
-          <h1 className="text-2xl font-bold">Welcome Back</h1>
-          <p className="text-muted-foreground text-balance">text-balance</p>
+          <h1 className="text-2xl font-bold">Let&apos;s get started</h1>
+          <p className="text-muted-foreground text-balance">
+            Create your account
+          </p>
         </div>
 
         <div className="grid gap3">
           <FieldGroup>
+            <Controller
+              name="name"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="name">Name</FieldLabel>
+                  <Input
+                    {...field}
+                    id={"name"}
+                    placeholder="Enter your name"
+                    type="text"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
             <Controller
               name="email"
               control={form.control}
@@ -89,6 +108,26 @@ export const SignInForm = () => {
                 </Field>
               )}
             />
+            <Controller
+              name="confirmPassword"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="confirmPassword">
+                    Confirm Password
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    placeholder="Enter your confirm password"
+                    id={"confirmPassword"}
+                    type={"password"}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
           </FieldGroup>
         </div>
         {error && (
@@ -105,14 +144,14 @@ export const SignInForm = () => {
             Or continue with
           </span>
         </div>
-        <SocialSignIn />
+
         <div className="text-center text-sm">
-          Don&apos;t have an account?{" "}
+          Already have an account?{" "}
           <Link
-            href="/sign-up"
+            href="/sign-in"
             className="text-blue-400 hover:underline hover:underline-offset-4"
           >
-            SignUp
+            SignIn
           </Link>
         </div>
       </div>
