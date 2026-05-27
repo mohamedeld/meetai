@@ -6,10 +6,5 @@ import { authClient } from "@/lib/auth-client";
 export const HomeView = () => {
   const { data: session } = authClient.useSession();
 
-  return (
-    <div className="flex flex-col p-4 gap-y-4">
-      <p>Logged in as {session?.user?.name}</p>
-      <Button onClick={() => authClient.signOut()}>Sign Out</Button>
-    </div>
-  );
+  return <div className="flex flex-col p-4 gap-y-4"></div>;
 };
