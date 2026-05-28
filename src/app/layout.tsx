@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { TRPCReactProvider } from "@/trpc/client";
+import { Toaster } from "@/components/ui/sonner";
 
 const robotoMono = Roboto_Mono({
   variable: "--font-roboto-mono",
@@ -21,7 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${robotoMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+          <Toaster />
+          {children}
+        </TRPCReactProvider>
       </body>
     </html>
   );
