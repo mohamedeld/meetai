@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NewAgentDialog } from "./new-agent-dialog";
+import { AgentsFilterContainer } from "./agents-filter-container";
 
 export const ListHeader = () => {
   const [open, setOpen] = useState(false);
@@ -17,6 +18,7 @@ export const ListHeader = () => {
             New Agent
           </Button>
         </div>
+        <AgentsFilterContainer />
       </div>
       <NewAgentDialog open={open} onOpenChange={setOpen} />
     </React.Fragment>
