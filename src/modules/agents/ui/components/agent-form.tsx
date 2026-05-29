@@ -45,6 +45,24 @@ export const AgentForm = ({ agent, onCancel, onSuccess }: IAgentForm) => {
       },
     }),
   );
+  const updateAgent = useMutation(
+    trpc.agents.update.mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(
+          trpc.agents.getMany.queryOptions({}),
+        );
+        if (agent?.id) {
+          await queryClient.invalidateQueries(
+            trpc.agents.getOne.queryOptions({ id: agent?.id }),
+          );
+        }
+        onSuccess?.();
+      },
+      onError: (error) => {
+        toast.error(error?.message);
+      },
+    }),
+  );
 
   const form = useForm<IAgentOne>({
     resolver: zodResolver(agentsInsertSchema),
@@ -58,6 +76,10 @@ export const AgentForm = ({ agent, onCancel, onSuccess }: IAgentForm) => {
 
   const onSubmit = (values: IAgentOne) => {
     if (isEdit) {
+      updateAgent.mutate({
+        ...values,
+        id: agent?.id,
+      });
     }
     createAgent.mutate(values);
   };
