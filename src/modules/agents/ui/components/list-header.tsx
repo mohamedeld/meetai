@@ -5,6 +5,7 @@ import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NewAgentDialog } from "./new-agent-dialog";
 import { AgentsFilterContainer } from "./agents-filter-container";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export const ListHeader = () => {
   const [open, setOpen] = useState(false);
@@ -18,7 +19,10 @@ export const ListHeader = () => {
             New Agent
           </Button>
         </div>
-        <AgentsFilterContainer />
+        <ScrollArea>
+          <AgentsFilterContainer />
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </div>
       <NewAgentDialog open={open} onOpenChange={setOpen} />
     </React.Fragment>
