@@ -37,7 +37,10 @@ export const CommandSelect = ({
 }: IProps) => {
   const [open, setOpen] = useState(false);
   const selectOption = options?.find((option) => option.value === value);
-
+  const handleClose = (value: boolean) => {
+    onSearch?.("");
+    setOpen(value);
+  };
   return (
     <React.Fragment>
       <Button
@@ -53,7 +56,7 @@ export const CommandSelect = ({
         <div className="">{selectOption?.children ?? placeholder}</div>
         <ChevronsUpDownIcon />
       </Button>
-      <CommandResponsiveDialog open={open} onOpenChange={setOpen}>
+      <CommandResponsiveDialog open={open} onOpenChange={handleClose}>
         <Command>
           <CommandInput placeholder="Search..." onValueChange={onSearch} />
           <CommandList>

@@ -2,29 +2,41 @@
 
 import { memo } from "react";
 import { XCircleIcon } from "lucide-react";
-import { DEFAULT_PAGE } from "@/constants";
 import { Button } from "@/components/ui/button";
+import { MeetingsSearchFilter } from "./meeting-search-filter";
+import { useMeetingFilters } from "../../hooks/use-meeting-filter";
+import { DEFAULT_PAGE } from "@/constants";
+import { StatusFilter } from "./status-filter";
+import { AgentIdFilter } from "./agent-id-filter";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export const MeetingFilterContainer = memo(() => {
-  //   const [filters, setFilters] = useFilters() !!filters.search;
-  const isAnyFilterModified = false;
+  const [filters, setFilters] = useMeetingFilters();
+  const isAnyFilterModified = !!filters.search;
   const onClearFilters = () => {
-    // setFilters({
-    //   search: "",
-    //   page: DEFAULT_PAGE,
-    // });
+    setFilters({
+      search: "",
+      page: DEFAULT_PAGE,
+      agentId: "",
+      status: null,
+    });
   };
 
   return (
-    <div className="flex items-center gap-x-2 pl-1">
-      {/* <AgentsSearchFilter /> */}
-      {isAnyFilterModified && (
-        <Button onClick={onClearFilters} variant={"outline"} size={"sm"}>
-          <XCircleIcon />
-          Clear
-        </Button>
-      )}
-    </div>
+    <ScrollArea>
+      <div className="flex items-center gap-x-2 pl-1">
+        <MeetingsSearchFilter />
+        <StatusFilter />
+        <AgentIdFilter />
+        {isAnyFilterModified && (
+          <Button onClick={onClearFilters} variant={"outline"} size={"sm"}>
+            <XCircleIcon />
+            Clear
+          </Button>
+        )}
+      </div>
+      <ScrollBar orientation="horizontal" />
+    </ScrollArea>
   );
 });
 
