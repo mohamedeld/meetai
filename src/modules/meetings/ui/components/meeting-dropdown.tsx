@@ -32,6 +32,7 @@ export const MeetingDropdown = ({ meeting }: IMeetingDropdown) => {
         router.push("/meetings");
       },
       onError: (error) => {
+        console.log("err", error);
         toast.error(error?.message);
       },
     }),
