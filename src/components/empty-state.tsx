@@ -3,12 +3,17 @@ import Image from "next/image";
 interface IProps {
   title: string;
   description: string;
+  image?: string;
 }
-export const EmptyState = ({ description, title }: IProps) => {
+export const EmptyState = ({
+  description,
+  title,
+  image = "/assets/empty.svg",
+}: IProps) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <Image
-        src={"/assets/empty.svg"}
+        src={image}
         width={240}
         height={240}
         alt="Empty image"

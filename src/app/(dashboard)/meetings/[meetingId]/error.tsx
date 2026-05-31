@@ -5,7 +5,7 @@ import { ErrorState } from "@/components/error-state";
 const ErrorMeetingsDetailPage = () => {
   return (
     <ErrorState
-      title="Error loading meetings details"
+      title="Error loading meeting details"
       description="Something went wrong"
     />
   );
